@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Plans — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>Plans</h1>
+    <div class="sub"><a href="{% url 'subscriptions:mine' %}">View my subscription &rarr;</a></div>
+  </div>
+</div>
+<div class="plan-grid">
+  {% for plan in plans %}
+    <div class="plan-card {% if plan.code == current_code %}current{% endif %}">
+      <div>{{ plan.name }}</div>
+      <div class="price">${{ plan.price_monthly }}<span style="font-size:13px;color:var(--muted);">/mo</span></div>
+      <ul>
+        <li>{{ plan.max_users|default:"Unlimited" }} users</li>
+        <li>{{ plan.max_projects|default:"Unlimited" }} projects</li>
+        {% for feature in plan.features %}
+          <li>{{ feature }}</li>
+        {% endfor %}
+      </ul>
+      {% if plan.code == current_code %}
+        <span class="pill">Current plan</span>
+      {% elif user.is_manager or user.is_platform_admin %}
+        <a class="btn secondary small" href="{% url 'subscriptions:upgrade' plan.code %}">Switch to {{ plan.name }}</a>
+      {% endif %}
+    </div>
+  {% empty %}
+    <p class="empty">No plans configured yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}My subscription — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-header"><h1>My subscription</h1></div>
+<div class="card" style="max-width:420px;">
+  <p><strong>Plan:</strong> {{ subscription.plan.name }}</p>
+  <p><strong>Status:</strong> <span class="status-dot status-{{ subscription.status }}"></span>{{ subscription.get_status_display }}</p>
+  <p><strong>Started:</strong> {{ subscription.started_at|date:"M j, Y" }}</p>
+  {% if subscription.is_mock %}
+    <p class="helptext">This is a mock subscription — no real payment gateway is connected yet.</p>
+  {% endif %}
+  <a class="btn secondary" href="{% url 'subscriptions:plans' %}">Browse plans</a>
+</div>
+{% endblock %}

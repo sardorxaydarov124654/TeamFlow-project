@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Switch plan — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-header"><h1>Switch to {{ plan.name }}?</h1></div>
+<div class="card" style="max-width:420px;">
+  <p>You are currently on <strong>{{ subscription.plan.name }}</strong>. This is a mock upgrade — no real payment will be charged.</p>
+  <form method="post">
+    {% csrf_token %}
+    <button class="btn" type="submit">Confirm switch to {{ plan.name }}</button>
+    <a class="btn secondary" href="{% url 'subscriptions:plans' %}">Cancel</a>
+  </form>
+</div>
+{% endblock %}
