@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ member.full_name }} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>{{ member.full_name }}</h1>
+    <div class="sub">{{ member.email }}</div>
+  </div>
+</div>
+<div class="card" style="max-width:420px;">
+  {% if can_edit %}
+  <form method="post" class="stacked">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {{ field.errors }}
+      </p>
+    {% endfor %}
+    <button class="btn" type="submit">Save</button>
+  </form>
+  {% else %}
+  <p><strong>Role:</strong> {{ member.get_role_display }}</p>
+  <p><strong>Status:</strong> {% if member.is_active %}Active{% else %}Deactivated{% endif %}</p>
+  {% endif %}
+</div>
+<p style="margin-top:16px;"><a href="{% url 'accounts:members' %}">&larr; Back to team</a></p>
+{% endblock %}

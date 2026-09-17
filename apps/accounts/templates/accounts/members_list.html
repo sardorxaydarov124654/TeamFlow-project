@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Team — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>Team members</h1>
+    <div class="sub">{{ members|length }} member{{ members|length|pluralize }}</div>
+  </div>
+  {% if user.is_manager or user.is_platform_admin %}
+    <a class="btn" href="{% url 'accounts:invite-member' %}">Invite teammate</a>
+  {% endif %}
+</div>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      {% for m in members %}
+      <tr>
+        <td><a href="{% url 'accounts:member-detail' m.pk %}">{{ m.full_name }}</a></td>
+        <td>{{ m.email }}</td>
+        <td><span class="pill role-{{ m.role }}">{{ m.get_role_display }}</span></td>
+        <td>{% if m.is_active %}Active{% else %}Deactivated{% endif %}</td>
+        <td>
+          {% if user.is_manager or user.is_platform_admin %}
+            {% if m.is_active and m != user %}
+            <form method="post" action="{% url 'accounts:member-deactivate' m.pk %}" style="display:inline;">
+              {% csrf_token %}
+              <button class="btn danger small" type="submit" onclick="return confirm('Deactivate this teammate?');">Deactivate</button>
+            </form>
+            {% endif %}
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5" class="empty">No teammates yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

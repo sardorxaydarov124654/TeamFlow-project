@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Join {{ invitation.company.name }} — TeamFlow{% endblock %}
+{% block guest_content %}
+<div class="auth-shell">
+  <div class="auth-card">
+    <div class="brand">TeamFlow</div>
+    <div class="tagline">Join {{ invitation.company.name }} as {{ invitation.get_role_display }}</div>
+    <form method="post" class="stacked">
+      {% csrf_token %}
+      <p><label>Email</label><input type="text" value="{{ invitation.email }}" disabled></p>
+      <p><label>First name</label><input type="text" name="first_name"></p>
+      <p><label>Last name</label><input type="text" name="last_name"></p>
+      <p><label>Password</label><input type="password" name="password"></p>
+      <button class="btn" type="submit" style="width:100%;">Join workspace</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Create account — TeamFlow{% endblock %}
+{% block guest_content %}
+<div class="auth-shell">
+  <div class="auth-card" style="width:420px;">
+    <div class="brand">TeamFlow</div>
+    <div class="tagline">Create your company workspace</div>
+    <form method="post" class="stacked">
+      {% csrf_token %}
+      {% for field in form %}
+        <p>
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {{ field.errors }}
+          {% if field.help_text %}<div class="helptext">{{ field.help_text }}</div>{% endif %}
+        </p>
+      {% endfor %}
+      <button class="btn" type="submit" style="width:100%;">Create workspace</button>
+    </form>
+    <div class="auth-foot">Already have an account? <a href="{% url 'accounts:login' %}">Sign in</a></div>
+  </div>
+</div>
+{% endblock %}
