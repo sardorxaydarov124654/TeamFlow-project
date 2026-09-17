@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Notifications — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>Notifications</h1>
+    <div class="sub">{{ notifications|length }} total</div>
+  </div>
+  <form method="post" action="{% url 'notifications:mark-all-read' %}">
+    {% csrf_token %}
+    <button class="btn secondary" type="submit">Mark all as read</button>
+  </form>
+</div>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Notification</th><th>Type</th><th>When</th><th></th></tr></thead>
+    <tbody>
+    {% for n in notifications %}
+      <tr style="{% if not n.is_read %}font-weight:600;{% endif %}">
+        <td>{{ n.title }}<div class="helptext" style="font-weight:400;">{{ n.message }}</div></td>
+        <td>{{ n.get_type_display }}</td>
+        <td>{{ n.created_at|date:"M j, Y H:i" }}</td>
+        <td>
+          {% if not n.is_read %}
+          <form method="post" action="{% url 'notifications:mark-read' n.pk %}">
+            {% csrf_token %}
+            <button class="btn small secondary" type="submit">Mark read</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="4" class="empty">No notifications yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
