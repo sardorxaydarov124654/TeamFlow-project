@@ -1,0 +1,82 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TeamFlow\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: uz\n"
+
+msgid "Dashboard"
+msgstr "Boshqaruv paneli"
+
+msgid "Projects"
+msgstr "Loyihalar"
+
+msgid "Tasks"
+msgstr "Vazifalar"
+
+msgid "Team"
+msgstr "Jamoa"
+
+msgid "Notifications"
+msgstr "Bildirishnomalar"
+
+msgid "Billing"
+msgstr "To'lovlar"
+
+msgid "All companies"
+msgstr "Barcha kompaniyalar"
+
+msgid "Company settings"
+msgstr "Kompaniya sozlamalari"
+
+msgid "Sign out"
+msgstr "Chiqish"
+
+msgid "Language"
+msgstr "Til"
+
+msgid "Toggle dark mode"
+msgstr "Tungi rejimni yoqish/o'chirish"
+
+msgid "Updated"
+msgstr "Yangilangan"
+
+msgid "Active employees"
+msgstr "Faol xodimlar"
+
+msgid "Active projects"
+msgstr "Faol loyihalar"
+
+msgid "Completed projects"
+msgstr "Tugallangan loyihalar"
+
+msgid "Pending tasks"
+msgstr "Kutilayotgan vazifalar"
+
+msgid "Overdue tasks"
+msgstr "Muddati o'tgan vazifalar"
+
+msgid "Completed tasks"
+msgstr "Tugallangan vazifalar"
+
+msgid "Employee productivity"
+msgstr "Xodimlar samaradorligi"
+
+msgid "Employee"
+msgstr "Xodim"
+
+msgid "Assigned"
+msgstr "Topshirilgan"
+
+msgid "Completed"
+msgstr "Bajarilgan"
+
+msgid "No active employees yet."
+msgstr "Hozircha faol xodimlar yo'q."
+
+msgid "Platform Admin"
+msgstr "Platforma administratori"
+
+msgid "Manager"
+msgstr "Menejer"

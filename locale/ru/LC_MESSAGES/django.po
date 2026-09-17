@@ -1,0 +1,82 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TeamFlow\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+
+msgid "Dashboard"
+msgstr "Панель управления"
+
+msgid "Projects"
+msgstr "Проекты"
+
+msgid "Tasks"
+msgstr "Задачи"
+
+msgid "Team"
+msgstr "Команда"
+
+msgid "Notifications"
+msgstr "Уведомления"
+
+msgid "Billing"
+msgstr "Биллинг"
+
+msgid "All companies"
+msgstr "Все компании"
+
+msgid "Company settings"
+msgstr "Настройки компании"
+
+msgid "Sign out"
+msgstr "Выйти"
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Toggle dark mode"
+msgstr "Переключить тёмный режим"
+
+msgid "Updated"
+msgstr "Обновлено"
+
+msgid "Active employees"
+msgstr "Активные сотрудники"
+
+msgid "Active projects"
+msgstr "Активные проекты"
+
+msgid "Completed projects"
+msgstr "Завершённые проекты"
+
+msgid "Pending tasks"
+msgstr "Задачи в ожидании"
+
+msgid "Overdue tasks"
+msgstr "Просроченные задачи"
+
+msgid "Completed tasks"
+msgstr "Завершённые задачи"
+
+msgid "Employee productivity"
+msgstr "Продуктивность сотрудников"
+
+msgid "Employee"
+msgstr "Сотрудник"
+
+msgid "Assigned"
+msgstr "Назначено"
+
+msgid "Completed"
+msgstr "Завершено"
+
+msgid "No active employees yet."
+msgstr "Активных сотрудников пока нет."
+
+msgid "Platform Admin"
+msgstr "Администратор платформы"
+
+msgid "Manager"
+msgstr "Менеджер"

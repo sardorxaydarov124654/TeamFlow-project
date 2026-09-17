@@ -1,0 +1,8 @@
+{% load avatar_extras %}
+{% if user.avatar %}
+  <img class="avatar avatar-{{ size|default:'md' }}" src="{{ user.avatar.url }}" alt="{{ user.full_name }}">
+{% else %}
+  <span class="avatar avatar-{{ size|default:'md' }} avatar-initials" style="background:{{ user|avatar_color }};">
+    {{ user|user_initials }}
+  </span>
+{% endif %}
