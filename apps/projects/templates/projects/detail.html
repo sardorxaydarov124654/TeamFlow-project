@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{{ project.name }} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>{{ project.name }}</h1>
+    <div class="sub"><span class="status-dot status-{{ project.status }}"></span>{{ project.get_status_display }} · Owner: {{ project.owner.full_name|default:"—" }}</div>
+  </div>
+  {% if user.is_manager or user.is_platform_admin %}
+    <div>
+      <a class="btn secondary" href="{% url 'projects:edit' project.pk %}">Edit</a>
+      <a class="btn danger" href="{% url 'projects:delete' project.pk %}">Delete</a>
+    </div>
+  {% endif %}
+</div>
+
+<div class="stat-grid">
+  <div class="stat-cell"><div class="num">{{ task_stats.total }}</div><div class="label">Total tasks</div></div>
+  <div class="stat-cell"><div class="num">{{ task_stats.todo }}</div><div class="label">To do</div></div>
+  <div class="stat-cell"><div class="num">{{ task_stats.in_progress }}</div><div class="label">In progress</div></div>
+  <div class="stat-cell"><div class="num">{{ task_stats.review }}</div><div class="label">Review</div></div>
+  <div class="stat-cell"><div class="num">{{ task_stats.done }}</div><div class="label">Done</div></div>
+</div>
+
+<div class="card" style="margin-bottom:24px;">
+  <p>{{ project.description|default:"No description yet."|linebreaks }}</p>
+  <p class="helptext">Start: {{ project.start_date|default:"—" }} · Deadline: {{ project.deadline|default:"—" }}</p>
+</div>
+
+<div class="page-header"><h2 style="font-size:18px;">Tasks in this project</h2>
+  <a class="btn secondary small" href="{% url 'tasks:list' %}?project={{ project.pk }}">View all in Tasks</a>
+</div>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Title</th><th>Assignee</th><th>Priority</th><th>Status</th></tr></thead>
+    <tbody>
+    {% for task in project.tasks.all|slice:":10" %}
+      <tr>
+        <td><a href="{% url 'tasks:detail' task.pk %}">{{ task.title }}</a></td>
+        <td>{{ task.assigned_to.full_name|default:"Unassigned" }}</td>
+        <td>{{ task.get_priority_display }}</td>
+        <td><span class="status-dot status-{{ task.status }}"></span>{{ task.get_status_display }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="4" class="empty">No tasks in this project yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

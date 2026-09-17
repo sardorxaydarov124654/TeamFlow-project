@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Projects — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>Projects</h1>
+    <div class="sub">{{ projects|length }} project{{ projects|length|pluralize }}</div>
+  </div>
+  {% if user.is_manager or user.is_platform_admin %}
+    <a class="btn" href="{% url 'projects:create' %}">New project</a>
+  {% endif %}
+</div>
+<form method="get" class="filters">
+  <input type="text" name="q" placeholder="Search projects…" value="{{ search }}">
+  <select name="status" onchange="this.form.submit()">
+    <option value="">All statuses</option>
+    {% for value, label in status_choices %}
+      <option value="{{ value }}" {% if value == current_status %}selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+  </select>
+  <select name="ordering" onchange="this.form.submit()">
+    <option value="-created_at" {% if ordering == "-created_at" %}selected{% endif %}>Newest first</option>
+    <option value="deadline" {% if ordering == "deadline" %}selected{% endif %}>Deadline</option>
+    <option value="name" {% if ordering == "name" %}selected{% endif %}>Name</option>
+  </select>
+  <button class="btn secondary small" type="submit">Filter</button>
+</form>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Name</th><th>Owner</th><th>Status</th><th>Deadline</th><th>Tasks</th></tr></thead>
+    <tbody>
+    {% for project in projects %}
+      <tr>
+        <td><a href="{% url 'projects:detail' project.pk %}">{{ project.name }}</a></td>
+        <td>{{ project.owner.full_name|default:"—" }}</td>
+        <td><span class="status-dot status-{{ project.status }}"></span>{{ project.get_status_display }}</td>
+        <td>{{ project.deadline|default:"—" }}</td>
+        <td>{{ project.tasks.count }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5" class="empty">No projects match these filters.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}{% if mode == "edit" %}Edit project{% else %}New project{% endif %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-header"><h1>{% if mode == "edit" %}Edit {{ project.name }}{% else %}New project{% endif %}</h1></div>
+<div class="card" style="max-width:520px;">
+  <form method="post" class="stacked">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {{ field.errors }}
+      </p>
+    {% endfor %}
+    <button class="btn" type="submit">{% if mode == "edit" %}Save changes{% else %}Create project{% endif %}</button>
+  </form>
+</div>
+{% endblock %}
