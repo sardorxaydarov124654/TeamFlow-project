@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Tasks — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>Tasks</h1>
+    <div class="sub">{{ tasks|length }} task{{ tasks|length|pluralize }}</div>
+  </div>
+  {% if not user.is_employee %}
+    <a class="btn" href="{% url 'tasks:create' %}">New task</a>
+  {% endif %}
+</div>
+<form method="get" class="filters">
+  <input type="text" name="q" placeholder="Search tasks…" value="{{ search }}">
+  <select name="status" onchange="this.form.submit()">
+    <option value="">All statuses</option>
+    {% for value, label in status_choices %}
+      <option value="{{ value }}" {% if value == current_status %}selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+  </select>
+  <select name="priority" onchange="this.form.submit()">
+    <option value="">All priorities</option>
+    {% for value, label in priority_choices %}
+      <option value="{{ value }}" {% if value == current_priority %}selected{% endif %}>{{ label }}</option>
+    {% endfor %}
+  </select>
+  <select name="ordering" onchange="this.form.submit()">
+    <option value="-created_at" {% if ordering == "-created_at" %}selected{% endif %}>Newest first</option>
+    <option value="deadline" {% if ordering == "deadline" %}selected{% endif %}>Deadline</option>
+    <option value="-priority" {% if ordering == "-priority" %}selected{% endif %}>Priority</option>
+  </select>
+  <button class="btn secondary small" type="submit">Filter</button>
+</form>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>Title</th><th>Project</th><th>Assignee</th><th>Priority</th><th>Status</th><th>Deadline</th></tr></thead>
+    <tbody>
+    {% for task in tasks %}
+      <tr>
+        <td><a href="{% url 'tasks:detail' task.pk %}">{{ task.title }}</a></td>
+        <td><a href="{% url 'projects:detail' task.project_id %}">{{ task.project.name }}</a></td>
+        <td>{{ task.assigned_to.full_name|default:"Unassigned" }}</td>
+        <td>{{ task.get_priority_display }}</td>
+        <td><span class="status-dot status-{{ task.status }}"></span>{{ task.get_status_display }}</td>
+        <td>{{ task.deadline|date:"M j, Y H:i"|default:"—" }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="6" class="empty">No tasks match these filters.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

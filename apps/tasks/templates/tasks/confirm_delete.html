@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Delete {{ task.title }} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-header"><h1>Delete "{{ task.title }}"?</h1></div>
+<div class="card" style="max-width:480px;">
+  <p>This will permanently remove the task and its comments. This cannot be undone.</p>
+  <form method="post">
+    {% csrf_token %}
+    <button class="btn danger" type="submit">Yes, delete task</button>
+    <a class="btn secondary" href="{% url 'tasks:detail' task.pk %}">Cancel</a>
+  </form>
+</div>
+{% endblock %}

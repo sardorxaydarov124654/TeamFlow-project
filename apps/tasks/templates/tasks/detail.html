@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ task.title }} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>{{ task.title }}</h1>
+    <div class="sub">
+      <span class="status-dot status-{{ task.status }}"></span>{{ task.get_status_display }}
+      · Priority: {{ task.get_priority_display }}
+      · Project: <a href="{% url 'projects:detail' task.project_id %}">{{ task.project.name }}</a>
+    </div>
+  </div>
+  {% if user.is_manager or user.is_platform_admin %}
+  <div>
+    <a class="btn secondary" href="{% url 'tasks:edit' task.pk %}">Edit</a>
+    <a class="btn danger" href="{% url 'tasks:delete' task.pk %}">Delete</a>
+  </div>
+  {% endif %}
+</div>
+
+<div class="card" style="margin-bottom:24px;">
+  <p>{{ task.description|default:"No description."|linebreaks }}</p>
+  <p class="helptext">
+    Assignee: {{ task.assigned_to.full_name|default:"Unassigned" }} ·
+    Created by: {{ task.created_by.full_name|default:"—" }} ·
+    Deadline: {{ task.deadline|date:"M j, Y H:i"|default:"—" }}
+  </p>
+</div>
+
+<h2 style="font-size:18px;">Comments</h2>
+<div class="card" style="margin-bottom:20px;">
+  {% for comment in comments %}
+    <div class="comment">
+      <div class="meta">{{ comment.author.full_name }} · {{ comment.created_at|date:"M j, Y H:i" }}</div>
+      <div>{{ comment.body|linebreaks }}</div>
+    </div>
+  {% empty %}
+    <p class="helptext">No comments yet.</p>
+  {% endfor %}
+</div>
+<div class="card" style="max-width:520px;">
+  <form method="post" class="stacked">
+    {% csrf_token %}
+    {{ comment_form.body }}
+    {{ comment_form.body.errors }}
+    <button class="btn" type="submit" style="margin-top:10px;">Add comment</button>
+  </form>
+</div>
+{% endblock %}

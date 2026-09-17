@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}{% if mode == "edit" %}Edit task{% else %}New task{% endif %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-header"><h1>{% if mode == "edit" %}Edit {{ task.title }}{% else %}New task{% endif %}</h1></div>
+<div class="card" style="max-width:520px;">
+  <form method="post" class="stacked">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {{ field.errors }}
+      </p>
+    {% endfor %}
+    <button class="btn" type="submit">{% if mode == "edit" %}Save changes{% else %}Create task{% endif %}</button>
+  </form>
+</div>
+{% endblock %}
