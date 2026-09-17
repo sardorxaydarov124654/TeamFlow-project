@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}TeamFlow — Team & project management{% endblock %}
+{% block guest_content %}
+<div class="landing">
+  <div>
+    <div class="brand">TeamFlow</div>
+    <p>Plan projects, assign tasks, and keep every team member in sync — all from one workspace.</p>
+    <div class="actions">
+      <a class="btn" href="{% url 'accounts:register' %}">Create a workspace</a>
+      <a class="btn secondary" href="{% url 'accounts:login' %}">Sign in</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

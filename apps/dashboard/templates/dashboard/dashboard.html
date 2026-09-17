@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Dashboard" %} — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>{{ company.name }}</h1>
+    <div class="sub">{% translate "Updated" %} {{ stats.generated_at|date:"M j, Y H:i" }}</div>
+  </div>
+</div>
+
+<div class="stat-grid">
+  <div class="stat-cell"><div class="num">{{ stats.total_employees }}</div><div class="label">{% translate "Active employees" %}</div></div>
+  <div class="stat-cell"><div class="num">{{ stats.active_projects }}</div><div class="label">{% translate "Active projects" %}</div></div>
+  <div class="stat-cell"><div class="num">{{ stats.completed_projects }}</div><div class="label">{% translate "Completed projects" %}</div></div>
+  <div class="stat-cell"><div class="num">{{ stats.pending_tasks }}</div><div class="label">{% translate "Pending tasks" %}</div></div>
+  <div class="stat-cell"><div class="num">{{ stats.overdue_tasks }}</div><div class="label">{% translate "Overdue tasks" %}</div></div>
+  <div class="stat-cell"><div class="num">{{ stats.completed_tasks }}</div><div class="label">{% translate "Completed tasks" %}</div></div>
+</div>
+
+<h2 style="font-size:18px;">{% translate "Employee productivity" %}</h2>
+<div class="table-wrap">
+  <table>
+    <thead><tr><th>{% translate "Employee" %}</th><th>{% translate "Assigned" %}</th><th>{% translate "Completed" %}</th></tr></thead>
+    <tbody>
+    {% for row in stats.employee_productivity %}
+      <tr>
+        <td>{{ row.first_name }} {{ row.last_name }} <span class="helptext">{{ row.email }}</span></td>
+        <td>{{ row.assigned }}</td>
+        <td>{{ row.completed }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="3" class="empty">{% translate "No active employees yet." %}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
