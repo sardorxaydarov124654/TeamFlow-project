@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Company settings — TeamFlow{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>{{ company.name }}</h1>
+    <div class="sub">Plan: {{ company.get_plan_display }} · {{ company.members.count }} members · {{ company.projects.count }} projects</div>
+  </div>
+</div>
+<div class="card" style="max-width:480px;">
+  {% if can_edit %}
+  <form method="post" enctype="multipart/form-data" class="stacked">
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {{ field.errors }}
+      </p>
+    {% endfor %}
+    <button class="btn" type="submit">Save changes</button>
+  </form>
+  {% else %}
+  <p>{{ company.description|default:"No description yet." }}</p>
+  <p class="helptext">Only the company owner can edit these settings.</p>
+  {% endif %}
+</div>
+{% endblock %}
